@@ -1,0 +1,22 @@
+resource "google_compute_region_url_map" "{{$.PrimaryResourceId}}" {
+  provider    = google-beta
+  region      = "us-central1"
+  name        = "{{index $.Vars "region_url_map_name"}}"
+  description = "test description"
+
+  default_service = google_compute_region_backend_bucket.default.id
+}
+
+resource "google_compute_region_backend_bucket" "default" {
+  name        = "{{index $.Vars "region_backend_bucket_name"}}"
+  region      = "us-central1"
+  description = "backend bucket example"
+  bucket_name = google_storage_bucket.filtered-bucket.name
+}
+
+resource "google_storage_bucket" "filtered-bucket" {
+  name                        = "{{index $.Vars "storage_bucket_name"}}"
+  location                    = "us-central1"
+  force_destroy               = true
+  uniform_bucket_level_access = true
+}
