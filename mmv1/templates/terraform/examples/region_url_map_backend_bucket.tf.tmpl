@@ -8,13 +8,16 @@ resource "google_compute_region_url_map" "{{$.PrimaryResourceId}}" {
 }
 
 resource "google_compute_region_backend_bucket" "default" {
-  name        = "{{index $.Vars "region_backend_bucket_name"}}"
-  region      = "us-central1"
-  description = "backend bucket example"
-  bucket_name = google_storage_bucket.filtered-bucket.name
+  provider              = google-beta
+  name                  = "{{index $.Vars "region_backend_bucket_name"}}"
+  region                = "us-central1"
+  description           = "backend bucket example"
+  bucket_name           = google_storage_bucket.filtered-bucket.name
+  load_balancing_scheme = "INTERNAL_MANAGED"
 }
 
 resource "google_storage_bucket" "filtered-bucket" {
+  provider                    = google-beta
   name                        = "{{index $.Vars "storage_bucket_name"}}"
   location                    = "us-central1"
   force_destroy               = true
