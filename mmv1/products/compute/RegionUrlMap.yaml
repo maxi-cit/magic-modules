@@ -288,7 +288,7 @@ properties:
       - 'default_service'
       - 'default_url_redirect'
       - 'default_route_action.0.weighted_backend_services'
-    custom_expand: 'templates/terraform/custom_expand/resourceref_with_validation.go.tmpl'
+    custom_expand: 'templates/terraform/custom_expand/resourceref_with_validation_default_backend.go.tmpl'
     resource: 'RegionBackendService'
     imports: 'selfLink'
   - name: 'description'
